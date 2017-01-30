@@ -37,12 +37,13 @@ where dept_manager.to_date > curdate() and salaries.to_date>curdate()
 group by employee_name, dept_name, salaries;
 
 
-select concat(employees.first_name , " ", employees.last_name) as employee_name, dept_name
+select concat(employees.first_name , " ", employees.last_name) as employee_name, departments.dept_name, concat(managers.first_name, " ", managers.last_name) as managers
 from dept_emp
 join departments on dept_emp.dept_no = departments.dept_no
 join dept_manager on departments.dept_no = dept_manager.dept_no
 join employees on dept_emp.emp_no = employees.emp_no
-join employees on dept_manager.emp_no = employees.emp_no;
+join employees as managers on dept_manager.emp_no = employees.emp_no
+where dept_emp.to_date>curdate() and dept_manager.to_date>curdate();
 
 
 
